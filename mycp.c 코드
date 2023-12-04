@@ -1,35 +1,39 @@
-#include <stdio.h>
 
-​
+ #include <stdio.h>
 
 int main(int argc, char *argv[]) {
-
-    FILE *s, *t;
-
+    FILE *sourceFile, *destinationFile;
     char c;
 
-​
+    if (argc != 3) {
+        fprintf(stderr, "사용법: %s <소스파일> <대상파일>\n", argv[0]);
+        return 1;
+    }
 
-    s = fopen(argv[1], "r"); 
+    sourceFile = fopen(argv[1], "r");
+    if (sourceFile == NULL) {
+        perror("소스 파일 열기 실패");
+        return 1;
+    }
 
-    t = fopen(argv[2], "w");
+  
+    destinationFile = fopen(argv[2], "w");
+    if (destinationFile == NULL) {
+        perror("대상 파일 열기 실패");
+        fclose(sourceFile);
+        return 1;
+    }
 
-​
 
-    while ((c = fgetc(s)) != EOF)
+    while ((c = fgetc(sourceFile)) != EOF) {
+        fputc(c, destinationFile);
+    }
 
-        fputc(c, t);
 
-​
+    fclose(sourceFile);
+    fclose(destinationFile);
 
-    fclose(s);
-
-    fclose(t);
-
-​
+    printf("%s 파일이 %s 파일로 성공적으로 복사되었습니다.\n", argv[1], argv[2]);
 
     return 0;
-
 }
-
-​
