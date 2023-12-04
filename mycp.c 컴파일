@@ -1,6 +1,6 @@
 cd c:\
 
-cd C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\> 
+cd anu
 
 vcvars64.bat 
 
